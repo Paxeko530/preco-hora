@@ -41,10 +41,10 @@ footer{padding:32px 0 48px;color:var(--mut);font-size:.85rem;border-top:1px soli
 
 const JS = `const $=id=>document.getElementById(id);
 const eur=n=>isFinite(n)?n.toLocaleString('pt-PT',{style:'currency',currency:'EUR',maximumFractionDigits:0}):'—';
-function calc(v){const t=1-v.tax/100;const y=v.cost*12+(t>0?v.net*12/t:Infinity);const h=(52-v.off)*v.hpw*v.bill/100;const r=h>0?y/h:Infinity;return{y,h,r,d:r*8,m:y/12,p:r*v.proj*1.2}}
+function calc(v){const t=1-v.tax/100;const y=v.cost*12+(t>0?v.net*12/t:Infinity);const h=(52-v.off)*v.hpw*v.bill/100;const r=h>0?y/h:Infinity;const n=v.net/160;return{y,h,r,d:r*8,m:y/12,p:r*v.proj*1.2,n,loss:y-n*h}}
 function run(){const v={net:+$('net').value,cost:+$('cost').value,tax:+$('tax').value,hpw:+$('hpw').value,bill:+$('bill').value,off:+$('off').value,proj:+$('proj').value};const r=calc(v);
 $('hour').textContent=eur(r.r)+' /h';$('day').textContent=eur(r.d);$('mrev').textContent=eur(r.m);$('yrev').textContent=eur(r.y);
-$('bh').textContent=isFinite(r.h)?Math.round(r.h).toLocaleString('pt-PT'):'—';$('pp').textContent=eur(r.p)}
+$('bh').textContent=isFinite(r.h)?Math.round(r.h).toLocaleString('pt-PT'):'—';$('pp').textContent=eur(r.p);$('naive').textContent=eur(r.n)+' /h';$('loss').textContent=eur(r.loss)}
 document.querySelectorAll('.calc input').forEach(i=>i.addEventListener('input',run));run();`;
 
 const url = p => PFX + p;
@@ -57,7 +57,7 @@ function layout({title, desc, path: p, body, ld, script}) {
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:type" content="website"><meta property="og:locale" content="pt_PT">
 ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}</head>
 <body><div class="w">
-<nav><a class="logo" href="${url('/')}">Preço Hora</a><span class="links"><a href="${url('/guia/como-calcular-preco-hora/')}">Guia</a><a href="${SHOP}" rel="noopener">Planilhas</a></span></nav>
+<nav><a class="logo" href="${url('/')}">Preço Hora</a><span class="links"><a href="${url('/guia/como-calcular-preco-hora/')}">Guia</a><a href="${url('/guia/7-erros-preco-freelancer/')}">7 erros</a><a href="${SHOP}" rel="noopener">Planilhas</a></span></nav>
 ${body}
 <footer>Esta ferramenta é informativa e não constitui aconselhamento fiscal ou financeiro. Os valores de partida são ilustrativos e não representam taxas de mercado. Algumas ligações podem ser de afiliado: se comprar através delas, podemos receber uma comissão sem custo adicional para si.
 <br><a href="${url('/privacidade/')}">Privacidade</a></footer>
@@ -79,7 +79,8 @@ const calc = (d = {}) => `<section class="grid calc" aria-label="Calculadora">
 <div class="row"><span>Faturação necessária / ano</span><b id="yrev">—</b></div>
 <div class="row"><span>Horas faturáveis / ano</span><b id="bh">—</b></div>
 <label for="proj">Projeto estimado em (horas)</label><input id="proj" type="number" min="1" value="20">
-<div class="row"><span>Preço do projeto (+20% de risco)</span><b id="pp">—</b></div></div></section>`;
+<div class="row"><span>Preço do projeto (+20% de risco)</span><b id="pp">—</b></div></div></section>
+<section class="card" style="margin-bottom:16px"><strong>O erro mais comum</strong><p style="margin:.4em 0 0">Dividir o rendimento desejado por 160 horas dá <b id="naive">—</b>. Cobrando isso, ficaria com cerca de <b id="loss">—</b> a menos por ano do que precisa.</p></section>`;
 
 const cta = `<section class="card cta"><h2 style="margin-top:0">Já sabe o preço. E o resto do negócio?</h2>
 <p>Rendimento irregular exige controlo: faturação, impostos a pôr de lado, fundo de emergência. As nossas planilhas fazem isso por si.</p>
@@ -148,6 +149,19 @@ w('guia/como-calcular-preco-hora/index.html', layout({
 ${cta}${faqBlock(guiaFaq)}`
 }));
 
+
+const G = require('./guia.js');
+const guideBody = (print) => `<h1>${esc(G.title)}</h1><p class="sub">${esc(G.intro)}</p><p class="note">${esc(G.example)}</p>
+${G.errors.map((e,i)=>`<h2>${i+1}. ${esc(e[0])}</h2><p>${esc(e[1])}</p><p>${esc(e[2])}</p><p><b>Como corrigir:</b> ${esc(e[3])}</p>`).join('')}
+<h2>Lista de verificação</h2><ul class="l">${G.checklist.map(c=>`<li>☐ ${esc(c)}</li>`).join('')}</ul><p>${esc(G.close)}</p>`;
+w('guia/7-erros-preco-freelancer/index.html', layout({
+  title: G.title, desc: 'Os 7 erros mais comuns ao definir preços como freelancer, com exemplos de cálculo e uma lista de verificação.',
+  path: '/guia/7-erros-preco-freelancer/', script: false,
+  body: `<div class="crumbs"><a href="${url('/')}">Início</a> › Guia</div>${guideBody()}${cta}`
+}));
+w('../guia-pdf.html', `<!doctype html><html lang="pt-PT"><head><meta charset="utf-8"><title>${esc(G.title)}</title><style>${CSS}
+body{background:#fff;color:#14171d}h1{font-size:2rem}h2{font-size:1.25rem;break-after:avoid}p,li{font-size:11pt}@page{margin:18mm}</style></head><body><div class="w">${guideBody(true)}</div></body></html>`);
+
 // ---------- Privacidade ----------
 w('privacidade/index.html', layout({
   title: 'Política de privacidade', desc: 'Como tratamos os seus dados neste site.', path: '/privacidade/', script: false,
@@ -162,7 +176,7 @@ w('privacidade/index.html', layout({
 w('style.css', CSS);
 w('calc.js', JS);
 w('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${BASE}/sitemap.xml\n`);
-const urls = ['/', '/guia/como-calcular-preco-hora/', '/privacidade/', ...P.map(p => `/preco-hora/${p.slug}/`)];
+const urls = ['/', '/guia/7-erros-preco-freelancer/', '/guia/como-calcular-preco-hora/', '/privacidade/', ...P.map(p => `/preco-hora/${p.slug}/`)];
 w('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u => `<url><loc>${BASE}${u}</loc></url>`).join('')}</urlset>`);
 w('404.html', layout({title: 'Página não encontrada', desc: 'Página não encontrada.', path: '/404.html', script: false, body: `<h1>Página não encontrada</h1><p><a href="${url('/')}">Voltar ao início</a></p>`}));
 console.log('Páginas geradas:', urls.length + 1);

@@ -1,0 +1,38 @@
+// Conteúdo do guia grátis. Exemplo numérico: 1800 € líquidos, 250 € custos, 30% impostos, 60% faturável, 6 semanas de pausa.
+module.exports = {
+title: '7 erros que fazem o freelancer cobrar menos do que devia',
+intro: 'Muitos freelancers fixam o preço pelo salário que tinham, pelo que viram a concorrência cobrar ou por um palpite. O resultado é trabalhar muitas horas e ficar com pouco. Estes são os sete erros mais comuns e como corrigi-los.',
+example: 'Exemplo usado ao longo do guia: quer 1 800 € líquidos por mês, tem 250 € de custos mensais, paga 30% de impostos sobre o lucro, trabalha 40 h por semana, fatura 60% desse tempo e para 6 semanas por ano.',
+errors: [
+['Dividir o salário desejado por 160 horas',
+ 'Um mês tem cerca de 160 horas de trabalho, e 1 800 ÷ 160 dá 11,25 € por hora. Parece razoável, mas ignora quase tudo: impostos, custos e o tempo em que não está a faturar.',
+ 'Com o cálculo completo, o mesmo objetivo exige cerca de 31 € por hora. A diferença é quase o triplo.',
+ 'Calcule a faturação anual necessária e divida-a pelas horas que realmente consegue faturar, não pelas que trabalha.'],
+['Esquecer os impostos e os custos',
+ 'O rendimento que quer é o que sobra para si. Os impostos e contribuições incidem sobre o lucro e os custos do negócio saem antes de ter qualquer rendimento.',
+ 'No exemplo, 250 € de custos mensais são 3 000 € por ano que o preço tem de cobrir, e 30% de impostos aumentam bastante a faturação necessária.',
+ 'Parta do líquido desejado, some os custos e ajuste aos impostos: faturação = custos + líquido ÷ (1 − taxa). Confirme a taxa com o seu contabilista.'],
+['Contar todas as horas como faturáveis',
+ 'Propostas, reuniões não pagas, administração, faturação, formação e procura de clientes são trabalho, mas não se faturam. Num dia de oito horas, é raro faturar as oito.',
+ 'No exemplo, apenas 60% das horas são faturáveis, o que dá 24 horas por semana, não 40.',
+ 'Meça durante um mês: registe o tempo em categorias faturável e não faturável. Use o valor real, não o desejado.'],
+['Esquecer férias, feriados e doença',
+ 'Um ano tem 52 semanas, mas o freelancer não fatura em todas. Não há subsídio de férias nem baixa paga pelo cliente.',
+ 'Com 6 semanas de pausa, trabalha 46 semanas: cerca de 1 104 horas faturáveis no ano, em vez de 1 248 se contasse as 52 semanas.',
+ 'Decida quantas semanas vai parar e retire-as do cálculo antes de dividir.'],
+['Orçamentar sem margem de risco',
+ 'Estimativas tendem a ficar curtas: pedidos de alteração, comunicação lenta e imprevistos técnicos. Num preço fechado, o risco é seu.',
+ 'Uma margem de 20% sobre a estimativa é um ponto de partida comum para projetos com requisitos incertos.',
+ 'Limite as rondas de revisão no contrato, defina o que fica fora do âmbito e cobre as alterações extra à hora.'],
+['Copiar os preços da concorrência',
+ 'Não conhece os custos, os impostos nem o tempo não faturável do outro. O preço dele pode ser baixo porque está a começar, ou porque não fez as contas.',
+ 'Se copiar um preço abaixo do seu mínimo, cada projeto aproxima-o do prejuízo.',
+ 'Calcule primeiro o seu mínimo. Depois compare: a concorrência diz-lhe o que o mercado aceita, não o que o seu negócio precisa.'],
+['Nunca rever o preço',
+ 'Os custos sobem, a experiência aumenta e o preço fica igual. Muitos freelancers cobram o mesmo durante anos.',
+ 'Mesmo um pequeno aumento anual compensa a inflação e a evolução do seu trabalho.',
+ 'Marque no calendário uma revisão anual. Aplique o novo preço a clientes novos e avise os atuais com antecedência.']
+],
+checklist: ['Defini o rendimento líquido mensal que quero.','Somei todos os custos do negócio, em valor mensal.','Confirmei com o contabilista a percentagem de impostos.','Medi as minhas horas faturáveis durante um mês.','Descontei as semanas de férias, feriados e doença.','Acrescentei margem de risco aos preços fechados.','Calculei o meu preço mínimo antes de ver a concorrência.','Marquei a revisão anual do meu preço.'],
+close: 'Faça as contas com a calculadora gratuita em paxeko530.github.io/preco-hora e guarde este guia para a próxima revisão. Os valores são ilustrativos e este guia não constitui aconselhamento fiscal ou financeiro.'
+};
