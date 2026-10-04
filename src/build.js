@@ -6,6 +6,7 @@ const BASE = process.env.BASE_URL || 'https://paxeko530.github.io/preco-hora';
 const PFX = new URL(BASE).pathname.replace(/\/$/, '');          // prefixo de caminho (GitHub Pages)
 const SHOP = process.env.SHOP_URL || 'https://paxeko530.gumroad.com';
 const FORM = process.env.FORM_URL || '';   // sem URL, o formulário de email não é publicado
+const GC = process.env.GC_CODE || '';     // código GoatCounter; sem ele não há estatísticas
 const OUT = path.join(__dirname, 'dist');
 
 const w = (f, c) => { const p = path.join(OUT, f); fs.mkdirSync(path.dirname(p), {recursive: true}); fs.writeFileSync(p, c); };
@@ -61,7 +62,7 @@ ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}
 ${body}
 <footer>Esta ferramenta é informativa e não constitui aconselhamento fiscal ou financeiro. Os valores de partida são ilustrativos e não representam taxas de mercado. Algumas ligações podem ser de afiliado: se comprar através delas, podemos receber uma comissão sem custo adicional para si.
 <br><a href="${url('/privacidade/')}">Privacidade</a></footer>
-</div>${script === false ? '' : `<script src="${url('/calc.js')}"></script>`}</body></html>`;
+</div>${script === false ? '' : `<script src="${url('/calc.js')}"></script>`}${GC ? `<script data-goatcounter="https://${GC}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>` : ''}</body></html>`;
 }
 
 const calc = (d = {}) => `<section class="grid calc" aria-label="Calculadora">
@@ -168,7 +169,7 @@ w('privacidade/index.html', layout({
   body: `<h1>Política de privacidade</h1>
 <p>A calculadora funciona inteiramente no seu navegador: os valores que introduz não são enviados nem guardados.</p>
 <p>Se subscrever o guia grátis, tratamos o seu email apenas para lhe enviar o guia e comunicações relacionadas com este site. Pode pedir a remoção a qualquer momento respondendo a um dos emails. O endereço é processado através do fornecedor de formulários indicado no momento da subscrição.</p>
-<p>Este site não usa cookies de publicidade. Se vier a adicionar estatísticas ou publicidade, esta página será atualizada antes.</p>
+${GC ? `<p>Para saber quantas pessoas visitam o site e de onde vêm, usamos o GoatCounter, um serviço de estatísticas que não usa cookies nem acompanha os visitantes entre sites. Segundo o fornecedor, não regista dados pessoais identificáveis. Os dados recolhidos são o endereço da página, a origem da visita, o tipo de navegador e o ecrã.</p><p>Este site não usa cookies de publicidade.</p>` : `<p>Este site não usa cookies nem estatísticas de visitas. Se vier a adicioná-las, esta página será atualizada antes.</p>`}
 `
 }));
 
