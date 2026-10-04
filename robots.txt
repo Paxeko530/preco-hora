@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://paxeko530.github.io/preco-hora/sitemap.xml
